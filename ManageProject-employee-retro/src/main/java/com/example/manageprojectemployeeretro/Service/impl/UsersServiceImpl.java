@@ -4,30 +4,15 @@ import com.example.manageprojectemployeeretro.Entity.Employee;
 import com.example.manageprojectemployeeretro.Service.EmployeeService;
 import com.example.manageprojectemployeeretro.dao.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EmployeeServiceImpl implements EmployeeService {
+public class UsersServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
-    public void processOAuthPostLogin(String email) {
-        User existUser = userRepository.getUserBymail(email);
-
-        if (existUser == null) {
-            User newUser = new User();
-            newUser.setEmail(email);
-
-            userRepository.save(newUser);
-
-            System.out.println("Created new user: " + email);
-        }
-
-    }
-
     @Override
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
@@ -35,38 +20,44 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee updateEmployee(Employee employee) {
-        return employeeRepository.save(employee);
+        return null;
     }
 
     @Override
     public void removeEmployeeById(int id) {
-        employeeRepository.deleteById(id);
 
     }
 
     @Override
-    public Optional<Employee> getEmployeeById(String id) {
-
-        return employeeRepository.findEmployeeByEmail(id);
+    public Optional<Employee> getEmployeeById(String email) {
+        return employeeRepository.findEmployeeByEmail(email);
     }
 
     @Override
     public Optional<Employee> getEmployeeByEmail(String email) {
-
-
         return employeeRepository.findEmployeeByEmail(email);
     }
 
+    @Override
     public boolean checkLogin(String email, String pass) {
-        Optional<User> optionalUser = getUserById(email);
-        if(optionalUser.isPresent() && optionalUser.get().getPass().equals(pass)){
-            return  true;
+        Optional<Employee> optionalEmployee = getEmployeeByEmail(email);
+        if(optionalEmployee.isPresent() && optionalEmployee.get().getPassword().equals(pass)){
+            return true;
         }
         return false;
     }
-
-    public Optional<User> getUserByEmail(String email) {
-        return userRepository.findUserByEmail(email);
-    }
-
+//    public void processOAuthPostLogin(String email) {
+//        Employee existUser = employeeRepository.getEmployeeBymail(email);
+//
+//        if (existUser == null) {
+//            Employee newUser = new Employee();
+//            newUser.setEmail(email);
+//
+//            employeeRepository.save(newUser);
+//
+//            System.out.println("Created new user: " + email);
+//        }
+//
+//    }
 }
+

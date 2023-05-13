@@ -1,7 +1,9 @@
-package com.example.manageprojectemployeeretro.utils;
+package com.example.manageprojectemployeeretro.config;
 
+import com.example.manageprojectemployeeretro.Entity.CustomOAuth2User;
 import com.example.manageprojectemployeeretro.Service.impl.CustomOAuth2UserService;
-import com.example.manageprojectemployeeretro.Service.impl.EmployeeServiceImpl;
+import com.example.manageprojectemployeeretro.Service.impl.UserDetailsServiceImpl;
+import com.example.manageprojectemployeeretro.Service.impl.UsersServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,10 +25,10 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
     @Bean
     public UserDetailsService userDetailsService() {
-        return new EmployeeServiceImpl();
+        return new UserDetailsServiceImpl();
+
     }
 
     @Override
@@ -49,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         System.out.println("Authentication name: " + authentication.getName());
                         CustomOAuth2User oauthUser = (CustomOAuth2User) authentication.getPrincipal();
 
-                        usersServiceipml.processOAuthPostLogin(oauthUser.getEmail());
+//                        usersServiceipml.processOAuthPostLogin(oauthUser.getEmail());
 
                         response.sendRedirect("/home");
                     }
@@ -75,5 +77,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private CustomOAuth2UserService oAuth2UserService;
 
     @Autowired
-    private EmployeeServiceImpl usersServiceipml;
+    private UsersServiceImpl usersServiceipml;
 }

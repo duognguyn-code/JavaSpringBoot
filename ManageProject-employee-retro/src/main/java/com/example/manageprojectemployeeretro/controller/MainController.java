@@ -16,11 +16,10 @@ import java.security.Principal;
 public class MainController {
     @GetMapping("/login")
     public String Login(Model model){
-        model.addAttribute("title", "Welcome");
-        model.addAttribute("message", "This is welcome page!");
+//        model.addAttribute("title", "Welcome");
+//        model.addAttribute("message", "This is welcome page!");
         return "Login";
     }
-
     @GetMapping("/home")
     public String welcomePage(Model model){
         return "home";

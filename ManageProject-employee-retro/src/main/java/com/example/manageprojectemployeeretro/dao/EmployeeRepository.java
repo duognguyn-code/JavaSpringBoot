@@ -12,6 +12,6 @@ import java.util.Optional;
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     Optional<Employee> findEmployeeByEmail(String email);
 
-    @Query("SELECT u FROM employee u WHERE u.email = :email")
+    @Query("SELECT u FROM Employee u WHERE u.email = :email")
     public Employee getEmployeeBymail(@Param("email") String email);
 }

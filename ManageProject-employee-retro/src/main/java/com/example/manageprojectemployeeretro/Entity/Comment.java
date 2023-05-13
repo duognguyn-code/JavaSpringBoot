@@ -5,16 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+
+import javax.persistence.*;
+
 import java.time.LocalDate;
+
+
 
 @Entity
 @Table(name = "comment")
@@ -35,10 +31,12 @@ public class Comment {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "rating")
-    private Integer rating;
 
     @Column(name = "date")
     private LocalDate date;
 
+    @Override
+    public String toString() {
+        return "Comment [id = " + id + "]";
+    }
 }

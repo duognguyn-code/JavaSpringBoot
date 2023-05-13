@@ -47,6 +47,9 @@ public class Employee {
     @Column(name = "position")
     private String position;
 
+    @Column(name = "password")
+    private String password;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
     private Role role;
