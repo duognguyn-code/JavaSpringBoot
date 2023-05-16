@@ -2,6 +2,7 @@ package com.example.manageprojectemployeeretro.Service.impl;
 
 import com.example.manageprojectemployeeretro.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -26,5 +27,28 @@ public class ApiService {
         } else {
             return Collections.emptyList();
         }
+    }
+    public UserDTO getUserById(String id) {
+        ResponseEntity<UserDTO> response = restTemplate.getForEntity(API_URL + id, UserDTO.class);
+        if (response.getStatusCode() == HttpStatus.OK) {
+            return response.getBody();
+        }
+        return null;
+    }
+
+    public UserDTO createUser(UserDTO users) {
+        ResponseEntity<UserDTO> response = restTemplate.postForEntity(API_URL, users, UserDTO.class);
+        if (response.getStatusCode() == HttpStatus.CREATED) {
+            return response.getBody();
+        }
+        return null;
+    }
+
+    public void updateUser(String id, UserDTO users) {
+        restTemplate.put(API_URL + id, users);
+    }
+
+    public void deleteUser(String email) {
+        restTemplate.delete(API_URL + email);
     }
 }

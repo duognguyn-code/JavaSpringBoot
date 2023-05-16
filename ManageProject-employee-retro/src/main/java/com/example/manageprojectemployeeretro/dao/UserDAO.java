@@ -8,6 +8,6 @@ public interface UserDAO {
     public void save(UserDTO user);
     public void update(UserDTO user);
     public void delete(int email);
-    public UserDTO get(int email);
+    public UserDTO find(int email);
     public List<UserDTO> list();
 }
