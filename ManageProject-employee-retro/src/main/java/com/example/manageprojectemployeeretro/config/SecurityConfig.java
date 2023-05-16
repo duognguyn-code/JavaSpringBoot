@@ -53,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 //                        usersServiceipml.processOAuthPostLogin(oauthUser.getEmail());
 
-                        response.sendRedirect("/home");
+                        response.sendRedirect("/api/users");
                     }
                 })
                 //.defaultSuccessUrl("/list")

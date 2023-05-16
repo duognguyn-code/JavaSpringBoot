@@ -10,6 +10,7 @@
 </head>
 <body>
 <h1>Login successful</h1>
+<a href="/api/users">CHuyển sang QL USer</a>
 
 </body>
 </html>
