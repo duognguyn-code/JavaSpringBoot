@@ -1,10 +1,16 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-xxxxxx" crossorigin="anonymous" />
+    <link rel="shortcut icon" href="<c:url value='/favicon.ico' />" type="image/x-icon" sizes="16x16">
     <title>JSP Page</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;900&display=swap');
@@ -118,7 +124,8 @@
         <label>PASSWORD</label>
         <input type="password" placeholder="Min 6 charaters long" />
         <button type="submit">LOGIN</button>
-        <button><a href="/oauth2/authorization/google">Login With Google</a></button>
+        <button><a href="/oauth2/authorization/google"><i class="fab fa-google"></i>
+            Login With Google</a></button>
     </div>
 </div>
 </body>
