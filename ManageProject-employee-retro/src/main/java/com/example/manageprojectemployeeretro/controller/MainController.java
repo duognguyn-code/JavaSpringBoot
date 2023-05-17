@@ -2,23 +2,35 @@ package com.example.manageprojectemployeeretro.controller;
 
 //import com.example.manageprojectemployeeretro.utils.WebUtils;
 
+import com.example.manageprojectemployeeretro.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 //import org.springframework.security.core.Authentication;
 
 
-import java.security.Principal;
-
 @Controller
 public class MainController {
+
+    @Autowired
+    private UserService userService;
     @GetMapping("/login")
-    public String Login(Model model){
+    public String Login(){
 //        model.addAttribute("title", "Welcome");
 //        model.addAttribute("message", "This is welcome page!");
         return "Login";
+    }
+    @PostMapping("/login/authen")
+    public String LoginAuthen(@RequestParam("email")String email,
+                        @RequestParam("password") String password,Model model){
+        if(userService.checkLogin(email, password)){
+            return "redirect:/api/users/listUser";
+        }else{
+            model.addAttribute("ERROR","Sai tên đăng nhập Hoặc mật khẩu ");
+            return "redirect:/api/users/listUser";
+        }
+
     }
     @GetMapping("/home")
     public String welcomePage(Model model){

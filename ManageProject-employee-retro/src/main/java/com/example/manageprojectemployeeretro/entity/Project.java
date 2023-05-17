@@ -1,4 +1,4 @@
-package com.example.manageprojectemployeeretro.Entity;
+package com.example.manageprojectemployeeretro.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,5 +34,5 @@ public class Project {
     private LocalDate endDate;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "projects")
-    private List<Employee> employees = new ArrayList<>();
+    private List<User> user = new ArrayList<>();
 }

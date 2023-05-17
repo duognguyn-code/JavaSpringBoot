@@ -1,4 +1,4 @@
-package com.example.manageprojectemployeeretro.Service.impl;
+package com.example.manageprojectemployeeretro.service.impl;
 
 import com.example.manageprojectemployeeretro.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +28,8 @@ public class ApiService {
             return Collections.emptyList();
         }
     }
-    public UserDTO getUserById(String id) {
-        ResponseEntity<UserDTO> response = restTemplate.getForEntity(API_URL + id, UserDTO.class);
+    public UserDTO getUserById(String email) {
+        ResponseEntity<UserDTO> response = restTemplate.getForEntity(API_URL + email, UserDTO.class);
         if (response.getStatusCode() == HttpStatus.OK) {
             return response.getBody();
         }
@@ -49,6 +49,11 @@ public class ApiService {
     }
 
     public void deleteUser(String email) {
-        restTemplate.delete(API_URL + email);
+        UserDTO userDTO = getUserById(email);
+        if (userDTO != null) {
+            restTemplate.delete(API_URL + email);
+        } else{
+            System.out.println("Không thấy");
+        }
     }
 }

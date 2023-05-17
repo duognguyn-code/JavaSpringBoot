@@ -8,7 +8,7 @@
     <title>Title</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="../../../resources/templates/list.css">
+    <link rel="stylesheet" type="text/css" href="../../../resources/static/css/list.css">
 
     <style>
 
@@ -108,6 +108,28 @@
             transition:background-color 0.3s ease-in-out;
         }
 
+        .pagination {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .pagination li {
+            margin: 0 5px;
+        }
+
+        .pagination li a {
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+        }
+
+        .pagination li.active a {
+            background-color: #ccc;
+            color: #fff;
+        }
         #contact button[type="submit"]:active { box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.5); }
 
         #contact input:focus, #contact textarea:focus {
@@ -240,10 +262,32 @@
             <input placeholder="Your first name" type="text" tabindex="1" id="firstName"  name="firstName" required autofocus>
         </fieldset>
         <fieldset>
-            <input placeholder="Your last name" type="text" id="lastName" name="lastName" tabindex="2" required>
+            <input placeholder="Your last name" type="text" id="lastName" name="lastName" tabindex="5" required>
         </fieldset>
         <fieldset>
-            <input placeholder="Your mail" type="text" tabindex="3" name="email" id="email" required>
+            <input placeholder="Your mail" type="text" tabindex="5" name="email" id="email" required>
+        </fieldset>
+        <fieldset>
+            <input placeholder="Your Phone" type="text" tabindex="5" name="phone" id="phone" required>
+        </fieldset>
+        <fieldset>
+            <input placeholder="Your Pass" type="text" tabindex="5" name="password" id="password" required>
+        </fieldset>
+        <fieldset>
+            <label>Choose role</label>
+            <select class="form-control"  id="roleId" name="roleId">
+                <c:forEach items="${roles}" var="role">
+                    <option value="${role.id}">${role.name}</option>
+                </c:forEach>
+            </select>
+        </fieldset>
+        <fieldset>
+            <label>Choose Project</label>
+            <select class="form-control"  id="projectId" name="projectId">
+                <c:forEach items="${projects}" var="project">
+                    <option value="${project.id}">${project.name}</option>
+                </c:forEach>
+            </select>
         </fieldset>
         <fieldset>
             <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
@@ -256,39 +300,58 @@
             <th>first Name</th>
             <th>Last name</th>
             <th>mail</th>
-            <th>Action</th>
+            <th>phone</th>
+            <th>Role</th>
+            <th>Project Join</th>
+            <th scope="row">Action</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${users1}" var="us">
+        <c:forEach items="${userPage.content}" var="us">
             <tr>
                 <td><strong>${us.id}</strong></td>
                 <td><strong>${us.firstName}</strong></td>
                 <td>${us.lastName}</td>
                 <td>${us.email}</td>
-                <td><a href="/api/users/delete/${us.email}" class="btn btn-danger">Delete</a></td>
-                <td>${us.email}</td>
+                <td>${us.phone}</td>
+                <td>${us.role.name}</td>
+                <td>${us.projects.name}</td>
+                <td>
+                    <a href="/api/users/delete/${us.id}" class="btn btn-danger">Delete</a>
+                    <a href="/api/users/update/${us.id}" class="btn btn-info">Update</a>
+                </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            <c:forEach var="i" begin="1" end="10">
-            <c:choose>
-            <c:when test="${i == page}">
-                <li class="page-item active">
-                    <span class="page-link">${i}</span>
-                </li>
+    <div class="pagination">
+        <c:choose>
+            <c:when test="${userPage.totalPages <= 5}">
+                <c:forEach var="i" begin="0" end="${userPage.totalPages - 1}">
+                    <li class="${i == currentPage ? 'active' : ''}"><a href="/api/users/listUser?page=${i}">${i}</a></li>
+                </c:forEach>
             </c:when>
             <c:otherwise>
-            <li class="page-item">
-                <a class="page-link" href="<c:url value="?page=${i}"/>">${i}</a>
-                </c:otherwise>
+                <c:choose>
+                    <c:when test="${currentPage < 3}">
+                        <c:forEach var="i" begin="0" end="4">
+                            <li class="${i == currentPage ? 'active' : ''}"><a href="/api/users/listUser?page=${i}">${i}</a></li>
+                        </c:forEach>
+                    </c:when>
+                    <c:when test="${currentPage >= 3 && currentPage <= userPage.totalPages - 3}">
+                        <c:forEach var="i" begin="${currentPage - 2}" end="${currentPage + 2}">
+                            <li class="${i == currentPage ? 'active' : ''}"><a href="/api/users/listUser?page=${i}">${i}</a></li>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                        <c:forEach var="i" begin="${userPage.totalPages - 4}" end="${userPage.totalPages - 1}">
+                            <li class="${i == currentPage ? 'active' : ''}"><a href="/api/users/listUser?page=${i}">${i}</a></li>
+                        </c:forEach>
+                    </c:otherwise>
                 </c:choose>
-                </c:forEach>
-        </ul>
-    </nav>
+            </c:otherwise>
+        </c:choose>
+    </div>
 </div>
 </body>
 </html>

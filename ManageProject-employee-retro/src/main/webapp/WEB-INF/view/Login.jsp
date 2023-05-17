@@ -119,13 +119,25 @@
 <body>
 <div class="container">
     <div class="inputs">
-        <label>EMAIL</label>
-        <input type="email" placeholder="example@test.com" />
-        <label>PASSWORD</label>
-        <input type="password" placeholder="Min 6 charaters long" />
+        <form action="/login/authen" method="post">
+        <div>
+            <label>EMAIL</label>
+            <input type="email" placeholder="example@test.com" name="email" id="email" />
+            <c:if test="${not empty error}">
+                <div class="error-message">${error}</div>
+            </c:if>
+        </div>
+        <div>
+            <label>PASSWORD</label>
+            <input type="password" placeholder="Min 6 charaters long" name="password" id="password" />
+            <c:if test="${not empty error}">
+                <div class="error-message">${error}</div>
+            </c:if>
+        </div>
         <button type="submit">LOGIN</button>
         <button><a href="/oauth2/authorization/google"><i class="fab fa-google"></i>
             Login With Google</a></button>
+        </form>
     </div>
 </div>
 </body>

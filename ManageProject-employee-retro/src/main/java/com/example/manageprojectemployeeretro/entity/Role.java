@@ -1,4 +1,4 @@
-package com.example.manageprojectemployeeretro.Entity;
+package com.example.manageprojectemployeeretro.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,5 +31,5 @@ public class Role {
     private String name;
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Employee> employees = new ArrayList<>();
+    private List<User> users = new ArrayList<>();
 }

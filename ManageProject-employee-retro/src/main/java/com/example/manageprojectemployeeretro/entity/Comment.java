@@ -1,4 +1,4 @@
-package com.example.manageprojectemployeeretro.Entity;
+package com.example.manageprojectemployeeretro.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,8 +24,8 @@ public class Comment {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "employee_id")
-    private Employee employee;
+    @JoinColumn(name = "user_id")
+    private User user;
 
 
     @Column(name = "content")
