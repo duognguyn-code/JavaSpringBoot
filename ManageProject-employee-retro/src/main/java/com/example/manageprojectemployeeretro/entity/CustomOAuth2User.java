@@ -26,6 +26,7 @@ public class CustomOAuth2User implements OAuth2User {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return oAuth2User.getAuthorities();
     }
+
     public String getEmail() {
         return oAuth2User.<String>getAttribute("email");
     }

@@ -252,46 +252,28 @@
             color: #444;
             text-shadow: 0 1px 0 #fff;
         }
-
-
+        #description {
+            width: 200%;
+        }
     </style>
 </head>
 <body>
 <div class="container">
-    <form id="contact"  method="post" action="/api/users/createUser">
-        <h1>Create User</h1>
+    <form id="contact"  method="post" action="/api/project/createProject">
+        <h1>Create Project</h1>
         <fieldset>
-            <input placeholder="Your first name" type="text" tabindex="1" id="firstName"  name="firstName" required autofocus>
+            <input placeholder="Name Project" type="text" tabindex="1" id="name"  name="name value="${project.} required autofocus>
         </fieldset>
         <fieldset>
-            <input placeholder="Your last name" type="text" id="lastName" name="lastName" tabindex="5" required>
+            <input placeholder="Description" type="text" id="description" name="description" tabindex="5" required>
         </fieldset>
         <fieldset>
-            <input placeholder="Your mail" type="text" tabindex="5" name="email" id="email" required>
+            <label>Start time</label>
+            <input placeholder="Start time" type="date" tabindex="5" name="startDate" id="startDate" required>
         </fieldset>
         <fieldset>
-            <input placeholder="Your Phone" type="text" tabindex="5" name="phone" id="phone" required>
-        </fieldset>
-        <fieldset>
-            <input placeholder="Your Pass" type="text" tabindex="5" name="password" id="password" required>
-        </fieldset>
-        <fieldset>
-            <label>Choose role</label>
-            <select class="form-control"  id="roleId" name="roleId">
-                <c:forEach items="${roles}" var="role">
-                    <option value="${role.id}">${role.name}</option>
-                </c:forEach>
-            </select>
-            <i class="fas fa-folder-plus"></i>
-        </fieldset>
-        <fieldset>
-            <label>Choose Project</label>
-            <select class="form-control"  id="projectId" name="projectId">
-                <c:forEach items="${projects}" var="project">
-                    <option value="${project.id}">${project.name} <i class="fa-sharp fa-light fa-folder-plus"></i></option>
-                </c:forEach>
-            </select>
-            <a href="/api/project/listProject"><i class="fas fa-folder-plus"></i></a>
+            <label>End time</label>
+            <input placeholder="End time" type="date" tabindex="5" name="endDate" id="endDate" required>
         </fieldset>
         <fieldset>
             <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
@@ -301,28 +283,25 @@
         <thead>
         <tr>
             <th>ID</th>
-            <th>first Name</th>
-            <th>Last name</th>
-            <th>mail</th>
-            <th>phone</th>
-            <th>Role</th>
-            <th>Project Join</th>
+            <th>Name Project</th>
+            <th>Description</th>
+            <th>Start Date</th>
+            <th>End Date</th>
             <th scope="row">Action</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${userPage.content}" var="us">
+        <c:forEach items="${projectPage.content}" var="project">
             <tr>
-                <td><strong>${us.id}</strong></td>
-                <td><strong>${us.firstName}</strong></td>
-                <td>${us.lastName}</td>
-                <td>${us.email}</td>
-                <td>${us.phone}</td>
-                <td>${us.role.name}</td>
-                <td>${us.projects.name}</td>
+                <td><strong>${project.id}</strong></td>
+                <td><strong>${project.name}</strong></td>
+                <td>${project.description}</td>
+                <td>${project.startDate}</td>
+                <td>${project.endDate}</td>
+
                 <td>
-                    <a href="/api/users/delete/${us.id}" class="btn btn-danger">Delete</a>
-                    <a href="/api/users/update/${us.id}" class="btn btn-info">Update</a>
+                    <a href="/api/project/delete/${project.id}" class="btn btn-danger">Delete</a>
+                    <a href="/api/project/update/${project.id}" class="btn btn-info">Update</a>
                 </td>
             </tr>
         </c:forEach>
@@ -330,26 +309,26 @@
     </table>
     <div class="pagination">
         <c:choose>
-            <c:when test="${userPage.totalPages <= 5}">
-                <c:forEach var="i" begin="0" end="${userPage.totalPages - 1}">
-                    <li class="${i == currentPage ? 'active' : ''}"><a href="/api/users/listUser?page=${i}">${i}</a></li>
+            <c:when test="${projectPage.totalPages <= 5}">
+                <c:forEach var="i" begin="0" end="${projectPage.totalPages - 1}">
+                    <li class="${i == currentPage ? 'active' : ''}"><a href="/api/project/listProject?page=${i}">${i}</a></li>
                 </c:forEach>
             </c:when>
             <c:otherwise>
                 <c:choose>
                     <c:when test="${currentPage < 3}">
                         <c:forEach var="i" begin="0" end="4">
-                            <li class="${i == currentPage ? 'active' : ''}"><a href="/api/users/listUser?page=${i}">${i}</a></li>
+                            <li class="${i == currentPage ? 'active' : ''}"><a href="/api/project/listProject?page=${i}">${i}</a></li>
                         </c:forEach>
                     </c:when>
-                    <c:when test="${currentPage >= 3 && currentPage <= userPage.totalPages - 3}">
+                    <c:when test="${currentPage >= 3 && currentPage <= projectPage.totalPages - 3}">
                         <c:forEach var="i" begin="${currentPage - 2}" end="${currentPage + 2}">
-                            <li class="${i == currentPage ? 'active' : ''}"><a href="/api/users/listUser?page=${i}">${i}</a></li>
+                            <li class="${i == currentPage ? 'active' : ''}"><a href="/api/project/listProjectpage=${i}">${i}</a></li>
                         </c:forEach>
                     </c:when>
                     <c:otherwise>
-                        <c:forEach var="i" begin="${userPage.totalPages - 4}" end="${userPage.totalPages - 1}">
-                            <li class="${i == currentPage ? 'active' : ''}"><a href="/api/users/listUser?page=${i}">${i}</a></li>
+                        <c:forEach var="i" begin="${projectPage.totalPages - 4}" end="${projectPage.totalPages - 1}">
+                            <li class="${i == currentPage ? 'active' : ''}"><a href="/api/project/listProject?page=${i}">${i}</a></li>
                         </c:forEach>
                     </c:otherwise>
                 </c:choose>

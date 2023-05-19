@@ -13,14 +13,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
-    public int id;
     public String firstName;
     public String lastName;
     public String email;
     private String password;
     public String phone;
-    private List<Integer> roleId;
+
+    private long roleId;
     private List<Integer> commentIds;
-    private List<Integer> projectId;
+    private long projectId;
+
 
 }

@@ -31,6 +31,10 @@ public class Comment {
     @Column(name = "content")
     private String content;
 
+    @Column(name = "rating")
+    private double rating;
+
+
 
     @Column(name = "date")
     private LocalDate date;

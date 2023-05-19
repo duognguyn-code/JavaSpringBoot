@@ -23,6 +23,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+
+    public List<User> getAllUser() {
+        return userDAO.findAll();
+    }
+
+    @Override
     public void createUser(User user) {
         userDAO.save(user);
 
@@ -56,15 +62,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getUserByEmail(String email) {
-        return userDAO.findUserByEmail(email);
+    public User getUserByEmail(String emailSI) {
+        return userDAO.getUserBymail(emailSI);
     }
 
     @Override
     public boolean checkLogin(String email, String pass) {
-        Optional<User> optionalUser = getUserByEmail(email);
-        if(optionalUser.isPresent() && optionalUser.get().getPassword().equals(pass)){
-            System.out.println(optionalUser.get().getEmail());
+        User optionalUser = userDAO.getUserBymail(email);
+        if(optionalUser != null && optionalUser.getPassword().equals(pass)){
             return  true;
         }
         return false;
