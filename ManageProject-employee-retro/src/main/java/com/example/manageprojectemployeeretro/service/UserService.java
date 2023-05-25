@@ -9,7 +9,9 @@ import java.util.Optional;
 
 public interface UserService {
     Page<User> getAllUsers(Pageable pageable);
+
     List<User> getAllUser();
+
     void createUser(User user);
 
     User findUserById(int id);
@@ -21,9 +23,10 @@ public interface UserService {
 
 
     void saveUser(List<User> users);
-    Optional<User> getUserById(int id);
+
 
     User getUserByEmail(String emailSI);
+
 
     boolean checkLogin(String email, String pass);
 }

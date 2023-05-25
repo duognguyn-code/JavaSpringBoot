@@ -13,6 +13,7 @@
     <link rel="shortcut icon" href="<c:url value='/favicon.ico' />" type="image/x-icon" sizes="16x16">
     <title>JSP Page</title>
     <style>
+
         :root {
             /* COLORS */
             --white: #e9e9e9;

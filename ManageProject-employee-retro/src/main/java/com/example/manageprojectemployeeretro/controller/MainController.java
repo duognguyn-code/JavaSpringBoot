@@ -1,7 +1,8 @@
 package com.example.manageprojectemployeeretro.controller;
 
-//import com.example.manageprojectemployeeretro.utils.WebUtils;
 
+
+import com.example.manageprojectemployeeretro.service.UserService;
 import com.example.manageprojectemployeeretro.dao.UserRepository;
 import com.example.manageprojectemployeeretro.entity.User;
 import com.example.manageprojectemployeeretro.service.UserService;
@@ -18,6 +19,19 @@ public class MainController {
 
     @Autowired
     private UserService userService;
+    @GetMapping("/login")
+    public String Login(){
+        return "Login";
+    }
+    @PostMapping("/login/authen")
+    public String LoginAuthen(@RequestParam("email")String email,
+                        @RequestParam("password") String password,Model model){
+        if(userService.checkLogin(email, password)){
+            return "redirect:/api/users/listUser";
+        }else{
+            model.addAttribute("ERROR","Sai tên đăng nhập Hoặc mật khẩu ");
+            return "redirect:/api/users/listUser";
+
 
     @Autowired
     private UserRepository userRepository;
@@ -35,6 +49,7 @@ public class MainController {
         }else{
             model.addAttribute("ERROR", Constants.ERROR);
             return "redirect:/login";
+
         }
 
     }
