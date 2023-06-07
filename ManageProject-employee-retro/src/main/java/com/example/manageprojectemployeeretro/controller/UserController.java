@@ -22,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import java.util.Collections;
 import java.util.List;
@@ -49,7 +50,6 @@ public class UserController {
     public String getAcc(@RequestParam(defaultValue = "0") int page, Model model){
         int pageSize = 10;
         Pageable pageable =  PageRequest.of(page, pageSize);
-
         List<User> userList = userService.getAllUser();
 
         Collections.reverse(userList);
@@ -86,4 +86,6 @@ public class UserController {
         userService.updateUser(user);
         return "redirect:/api/users/listUser";
     }
+
+
 }

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -40,5 +41,4 @@ public class Project {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "projects")
     private List<User> user;
-
 }

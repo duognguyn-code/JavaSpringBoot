@@ -35,7 +35,6 @@ public class Comment {
     private double rating;
 
 
-
     @Column(name = "date")
     private LocalDate date;
 

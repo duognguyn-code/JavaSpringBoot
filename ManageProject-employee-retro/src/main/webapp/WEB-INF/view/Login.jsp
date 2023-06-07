@@ -13,14 +13,12 @@
     <link rel="shortcut icon" href="<c:url value='/favicon.ico' />" type="image/x-icon" sizes="16x16">
     <title>JSP Page</title>
     <style>
-
         :root {
             /* COLORS */
             --white: #e9e9e9;
             --gray: #333;
             --blue: #0367a6;
             --lightblue: #008997;
-
             /* RADII */
             --button-radius: 0.7rem;
 
@@ -87,7 +85,6 @@
         .container.right-panel-active .container--signin {
             transform: translateX(100%);
         }
-
         .container--signup {
             left: 0;
             opacity: 0;

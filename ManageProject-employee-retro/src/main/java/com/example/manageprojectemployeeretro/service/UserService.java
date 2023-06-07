@@ -23,7 +23,7 @@ public interface UserService {
 
 
     void saveUser(List<User> users);
-
+    Optional<User> getUserById(int id);
 
     User getUserByEmail(String emailSI);
 

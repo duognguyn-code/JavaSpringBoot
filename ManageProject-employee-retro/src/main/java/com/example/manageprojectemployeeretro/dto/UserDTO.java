@@ -18,10 +18,8 @@ public class UserDTO {
     public String email;
     private String password;
     public String phone;
-
     private long roleId;
     private List<Integer> commentIds;
     private long projectId;
-
 
 }
