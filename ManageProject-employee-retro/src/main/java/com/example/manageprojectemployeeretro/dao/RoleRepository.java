@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface RoleRepository extends JpaRepository<Role, Long> {
     @Query("SELECT u FROM Role u WHERE u.id = :id")
     Role getRoleById(@Param("id") long id );
+
 }

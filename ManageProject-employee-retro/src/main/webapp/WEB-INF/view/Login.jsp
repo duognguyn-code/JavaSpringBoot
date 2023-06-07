@@ -19,7 +19,6 @@
             --gray: #333;
             --blue: #0367a6;
             --lightblue: #008997;
-
             /* RADII */
             --button-radius: 0.7rem;
 
@@ -86,7 +85,6 @@
         .container.right-panel-active .container--signin {
             transform: translateX(100%);
         }
-
         .container--signup {
             left: 0;
             opacity: 0;
