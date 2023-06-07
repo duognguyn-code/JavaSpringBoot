@@ -25,8 +25,10 @@ public interface UserService {
     void saveUser(List<User> users);
     Optional<User> getUserById(int id);
 
-    User getUserByEmail(String emailSI);
+    User getUserByEmail(String email);
 
 
     boolean checkLogin(String email, String pass);
+
+    List<User> getUsersByProjectId(Long projectId);
 }

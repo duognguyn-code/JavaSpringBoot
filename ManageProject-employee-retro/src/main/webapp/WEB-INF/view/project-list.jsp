@@ -259,10 +259,10 @@
 </head>
 <body>
 <div class="container">
-    <form id="contact"  method="post" action="/api/project/createProject">
+    <form id="contact"  method="post" action="/api1/project/createProject">
         <h1>Create Project</h1>
         <fieldset>
-            <input placeholder="Name Project" type="text" tabindex="1" id="name"  name="name value="${project.} required autofocus>
+            <input placeholder="Name Project" type="text" tabindex="1" id="name"  name="name value="${project.name} required autofocus>
         </fieldset>
         <fieldset>
             <input placeholder="Description" type="text" id="description" name="description" tabindex="5" required>
@@ -300,8 +300,8 @@
                 <td>${project.endDate}</td>
 
                 <td>
-                    <a href="/api/project/delete/${project.id}" class="btn btn-danger">Delete</a>
-                    <a href="/api/project/update/${project.id}" class="btn btn-info">Update</a>
+                    <a href="/api1/project/delete/${project.id}" class="btn btn-danger">Delete</a>
+                    <a href="/api1/project/viewUpdate/${project.id}" class="btn btn-info">Update</a>
                 </td>
             </tr>
         </c:forEach>
@@ -311,24 +311,24 @@
         <c:choose>
             <c:when test="${projectPage.totalPages <= 5}">
                 <c:forEach var="i" begin="0" end="${projectPage.totalPages - 1}">
-                    <li class="${i == currentPage ? 'active' : ''}"><a href="/api/project/listProject?page=${i}">${i}</a></li>
+                    <li class="${i == currentPage ? 'active' : ''}"><a href="/api1/project/listProject?page=${i}">${i}</a></li>
                 </c:forEach>
             </c:when>
             <c:otherwise>
                 <c:choose>
                     <c:when test="${currentPage < 3}">
                         <c:forEach var="i" begin="0" end="4">
-                            <li class="${i == currentPage ? 'active' : ''}"><a href="/api/project/listProject?page=${i}">${i}</a></li>
+                            <li class="${i == currentPage ? 'active' : ''}"><a href="/api1/project/listProject?page=${i}">${i}</a></li>
                         </c:forEach>
                     </c:when>
                     <c:when test="${currentPage >= 3 && currentPage <= projectPage.totalPages - 3}">
                         <c:forEach var="i" begin="${currentPage - 2}" end="${currentPage + 2}">
-                            <li class="${i == currentPage ? 'active' : ''}"><a href="/api/project/listProjectpage=${i}">${i}</a></li>
+                            <li class="${i == currentPage ? 'active' : ''}"><a href="/api1/project/listProjectpage=${i}">${i}</a></li>
                         </c:forEach>
                     </c:when>
                     <c:otherwise>
                         <c:forEach var="i" begin="${projectPage.totalPages - 4}" end="${projectPage.totalPages - 1}">
-                            <li class="${i == currentPage ? 'active' : ''}"><a href="/api/project/listProject?page=${i}">${i}</a></li>
+                            <li class="${i == currentPage ? 'active' : ''}"><a href="/api1/project/listProject?page=${i}">${i}</a></li>
                         </c:forEach>
                     </c:otherwise>
                 </c:choose>

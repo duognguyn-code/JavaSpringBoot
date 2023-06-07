@@ -34,6 +34,8 @@ public class Comment {
     @Column(name = "rating")
     private double rating;
 
+    @Column(name = "price")
+    private double price;
 
     @Column(name = "date")
     private LocalDate date;

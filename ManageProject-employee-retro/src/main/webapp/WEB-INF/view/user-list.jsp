@@ -10,7 +10,7 @@
           integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../../../resources/static/css/list.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
 
     <style>
 
@@ -62,6 +62,14 @@
             display:block;
             font-size:13px;
         }
+        #contact1 input[type="text"], #contact input[type="email"], #contact input[type="tel"], #contact input[type="url"], #contact textarea, #contact button[type="submit"] { font:400 12px/16px "Open Sans", Helvetica, Arial, sans-serif; }
+
+        #contact1 {
+            background:#F9F9F9;
+            padding:25px;
+            margin:50px 0;
+        }
+
 
         fieldset {
             border: medium none !important;
@@ -78,6 +86,7 @@
             margin:0 0 5px;
             padding:10px;
         }
+
 
         #contact input[type="text"]:hover, #contact input[type="email"]:hover, #contact input[type="tel"]:hover, #contact input[type="url"]:hover, #contact textarea:hover {
             -webkit-transition:border-color 0.3s ease-in-out;
@@ -109,7 +118,150 @@
             -moz-transition:background 0.3s ease-in-out;
             transition:background-color 0.3s ease-in-out;
         }
+        #contact1 input[type="text"], #contact input[type="email"], #contact input[type="tel"], #contact input[type="url"], #contact textarea {
+            width:100%;
+            border:1px solid #CCC;
+            background:#FFF;
+            margin:0 0 5px;
+            padding:10px;
+        }
 
+
+        #contact1 input[type="text"]:hover, #contact input[type="email"]:hover, #contact input[type="tel"]:hover, #contact input[type="url"]:hover, #contact textarea:hover {
+            -webkit-transition:border-color 0.3s ease-in-out;
+            -moz-transition:border-color 0.3s ease-in-out;
+            transition:border-color 0.3s ease-in-out;
+            border:1px solid #AAA;
+        }
+
+        #contact1 textarea {
+            height:100px;
+            max-width:100%;
+            resize:none;
+        }
+
+        #contact1 button[type="submit"] {
+            cursor:pointer;
+            width:100%;
+            border:none;
+            background:#0CF;
+            color:#FFF;
+            margin:0 0 5px;
+            padding:10px;
+            font-size:15px;
+        }
+
+        #contact1 button[type="submit"]:hover {
+            background:#09C;
+            -webkit-transition:background 0.3s ease-in-out;
+            -moz-transition:background 0.3s ease-in-out;
+            transition:background-color 0.3s ease-in-out;
+        }
+
+        .frame {
+            width: 90%;
+            margin: 40px auto;
+            text-align: center;
+        }
+        button {
+            margin: 20px;
+        }
+        .custom-btn {
+            width: 130px;
+            height: 40px;
+            color: #fff;
+            border-radius: 5px;
+            padding: 10px 25px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 500;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+            box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+            7px 7px 20px 0px rgba(0,0,0,.1),
+            4px 4px 5px 0px rgba(0,0,0,.1);
+            outline: none;
+        }
+        .btn-6 {
+            background: rgb(247,150,192);
+            background: radial-gradient(circle, rgba(247,150,192,1) 0%, rgba(118,174,241,1) 100%);
+            line-height: 42px;
+            padding: 0;
+            border: none;
+        }
+        .btn-6 span {
+            position: relative;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        .btn-6:before,
+        .btn-6:after {
+            position: absolute;
+            content: "";
+            height: 0%;
+            width: 1px;
+            box-shadow:
+                    -1px -1px 20px 0px rgba(255,255,255,1),
+                    -4px -4px 5px 0px rgba(255,255,255,1),
+                    7px 7px 20px 0px rgba(0,0,0,.4),
+                    4px 4px 5px 0px rgba(0,0,0,.3);
+        }
+        .btn-6:before {
+            right: 0;
+            top: 0;
+            transition: all 500ms ease;
+        }
+        .btn-6:after {
+            left: 0;
+            bottom: 0;
+            transition: all 500ms ease;
+        }
+        .btn-6:hover{
+            background: transparent;
+            color: #76aef1;
+            box-shadow: none;
+        }
+        .btn-6:hover:before {
+            transition: all 500ms ease;
+            height: 100%;
+        }
+        .btn-6:hover:after {
+            transition: all 500ms ease;
+            height: 100%;
+        }
+        .btn-6 span:before,
+        .btn-6 span:after {
+            position: absolute;
+            content: "";
+            box-shadow:
+                    -1px -1px 20px 0px rgba(255,255,255,1),
+                    -4px -4px 5px 0px rgba(255,255,255,1),
+                    7px 7px 20px 0px rgba(0,0,0,.4),
+                    4px 4px 5px 0px rgba(0,0,0,.3);
+        }
+        .btn-6 span:before {
+            left: 0;
+            top: 0;
+            width: 0%;
+            height: .5px;
+            transition: all 500ms ease;
+        }
+        .btn-6 span:after {
+            right: 0;
+            bottom: 0;
+            width: 0%;
+            height: .5px;
+            transition: all 500ms ease;
+        }
+        .btn-6 span:hover:before {
+            width: 100%;
+        }
+        .btn-6 span:hover:after {
+            width: 100%;
+        }
         .pagination {
             list-style: none;
             display: flex;
@@ -135,6 +287,12 @@
         #contact button[type="submit"]:active { box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.5); }
 
         #contact input:focus, #contact textarea:focus {
+            outline:0;
+            border:1px solid #999;
+        }
+        #contact1 button[type="submit"]:active { box-shadow:inset 0 1px 3px rgba(0, 0, 0, 0.5); }
+
+        #contact1 input:focus, #contact textarea:focus {
             outline:0;
             border:1px solid #999;
         }
@@ -258,7 +416,7 @@
 </head>
 <body>
 <div class="container">
-    <form id="contact"  method="post" action="/api/users/createUser">
+    <form id="contact"  method="post" action="/api1/users/createUser">
         <h1>Create User</h1>
         <fieldset>
             <input placeholder="Your first name" type="text" tabindex="1" id="firstName"  name="firstName" required autofocus>
@@ -291,12 +449,31 @@
                     <option value="${project.id}">${project.name} <i class="fa-sharp fa-light fa-folder-plus"></i></option>
                 </c:forEach>
             </select>
-            <a href="/api/project/listProject"><i class="fas fa-folder-plus"></i></a>
+            <a href="/api1/project/listProject"><i class="fas fa-folder-plus"></i></a>
         </fieldset>
         <fieldset>
             <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
         </fieldset>
     </form>
+
+
+
+    <form action="/api1/users/getDataByProjectId" method="GET">
+        <select name="project_id" class="form-select" aria-label="Default select example">
+            <c:forEach items="${projects}" var="project">
+                <option value="${project.id}">${project.name}</option>
+                <c:forEach items="${users}" var="user">
+                    <c:if test="${user.project_id == project.id}">
+                        <option value="${user.id}">${user.name}</option>
+                    </c:if>
+                </c:forEach>
+            </c:forEach>
+        </select>
+        <div class="frame">
+        <button class="custom-btn btn-6">Read More</button>
+        </div>
+    </form>
+
     <table>
         <thead>
         <tr>
@@ -321,8 +498,8 @@
                 <td>${us.role.name}</td>
                 <td>${us.projects.name}</td>
                 <td>
-                    <a href="/api/users/delete/${us.id}" class="btn btn-danger">Delete</a>
-                    <a href="/api/users/update/${us.id}" class="btn btn-info">Update</a>
+                    <a href="/api1/users/delete/${us.id}" class="btn btn-danger">Delete</a>
+                    <a href="/api1/users/viewUpdate/${us.id}" class="btn btn-info">Update</a>
                 </td>
             </tr>
         </c:forEach>
@@ -332,24 +509,24 @@
         <c:choose>
             <c:when test="${userPage.totalPages <= 5}">
                 <c:forEach var="i" begin="0" end="${userPage.totalPages - 1}">
-                    <li class="${i == currentPage ? 'active' : ''}"><a href="/api/users/listUser?page=${i}">${i}</a></li>
+                    <li class="${i == currentPage ? 'active' : ''}"><a href="/api1/users/listUser?page=${i}">${i}</a></li>
                 </c:forEach>
             </c:when>
             <c:otherwise>
                 <c:choose>
                     <c:when test="${currentPage < 3}">
                         <c:forEach var="i" begin="0" end="4">
-                            <li class="${i == currentPage ? 'active' : ''}"><a href="/api/users/listUser?page=${i}">${i}</a></li>
+                            <li class="${i == currentPage ? 'active' : ''}"><a href="/api1/users/listUser?page=${i}">${i}</a></li>
                         </c:forEach>
                     </c:when>
                     <c:when test="${currentPage >= 3 && currentPage <= userPage.totalPages - 3}">
                         <c:forEach var="i" begin="${currentPage - 2}" end="${currentPage + 2}">
-                            <li class="${i == currentPage ? 'active' : ''}"><a href="/api/users/listUser?page=${i}">${i}</a></li>
+                            <li class="${i == currentPage ? 'active' : ''}"><a href="/api1/users/listUser?page=${i}">${i}</a></li>
                         </c:forEach>
                     </c:when>
                     <c:otherwise>
                         <c:forEach var="i" begin="${userPage.totalPages - 4}" end="${userPage.totalPages - 1}">
-                            <li class="${i == currentPage ? 'active' : ''}"><a href="/api/users/listUser?page=${i}">${i}</a></li>
+                            <li class="${i == currentPage ? 'active' : ''}"><a href="/api1/users/listUser?page=${i}">${i}</a></li>
                         </c:forEach>
                     </c:otherwise>
                 </c:choose>

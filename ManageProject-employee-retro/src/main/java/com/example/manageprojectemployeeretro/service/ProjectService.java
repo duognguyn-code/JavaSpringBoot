@@ -1,5 +1,6 @@
 package com.example.manageprojectemployeeretro.service;
 
+import com.example.manageprojectemployeeretro.dto.ProjectProjection;
 import com.example.manageprojectemployeeretro.entity.Project;
 import com.example.manageprojectemployeeretro.entity.User;
 import org.springframework.data.domain.Page;
@@ -21,5 +22,7 @@ public interface ProjectService {
     Project saveProject(Project project);
 
     void deleteProjectById(long id);
+
+    List<ProjectProjection> findProjectsByName(String name);
     Page<Project> getAllUsers(Pageable pageable);
 }

@@ -10,7 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-xxxxxx" crossorigin="anonymous" />
-    <link rel="shortcut icon" href="<c:url value='/favicon.ico' />" type="image/x-icon" sizes="16x16">
+<%--    <link rel="shortcut icon" href="<c:url value='/favicon.ico' />" type="image/x-icon" sizes="16x16">--%>
     <title>JSP Page</title>
     <style>
         :root {
@@ -230,7 +230,24 @@
 <div class="container right-panel-active">
     <!-- Sign Up -->
     <div class="container__form container--signup">
-        <form  class="form" id="form1" >
+        <form action="/login/authen" class="form" id="form1" method="post" >
+
+            <h2 class="form__title">Sign In</h2>
+            <input type="email" placeholder="Email" class="input" name="email" id="email" />
+            <c:if test="${not empty error}">
+                <div class="error-message">${ERROR}</div>
+            </c:if>
+            <input type="password" placeholder="Password" class="input" name="password" />
+            <label>${ERROR}</label>
+            <a href="#" class="link">Forgot your password?</a>
+            <button type="submit" class="btn">Sign In</button>
+            <button class="btn"><a href="/oauth2/authorization/google"><i class="fab fa-google"></i>Login With Google</a></button>
+        </form>
+    </div>
+
+    <!-- Sign In -->
+    <div class="container__form container--signin">
+        <form  class="form" id="form2"  >
             <h2 class="form__title">Sign Up</h2>
             <input type="email" placeholder="User" class="input" name="emailSU" id="emailSU" />
             <input type="password" placeholder="Pass" class="input" name="password" />
@@ -242,32 +259,14 @@
         </form>
     </div>
 
-    <!-- Sign In -->
-    <div class="container__form container--signin">
-        <form action="/login/authen" class="form" id="form2" method="post" >
-            <h2 class="form__title">Sign In</h2>
-            <input type="email" placeholder="Email" class="input" name="email" id="email" />
-                        <c:if test="${not empty error}">
-                            <div class="error-message">${ERROR}</div>
-                        </c:if>
-            <input type="password" placeholder="Password" class="input" name="password" />
-
-                            <label>${ERROR}</label>
-
-            <a href="#" class="link">Forgot your password?</a>
-            <button type="submit" class="btn">Sign In</button>
-            <button class="btn"><a href="/oauth2/authorization/google"><i class="fab fa-google"></i>Login With Google</a></button>
-        </form>
-    </div>
-
     <!-- Overlay -->
     <div class="container__overlay">
         <div class="overlay">
             <div class="overlay__panel overlay--left">
-                <button class="btn" id="signIn">Sign In</button>
+                <button class="btn" id="signIn">Sign Up</button>
             </div>
             <div class="overlay__panel overlay--right">
-                <button class="btn" id="signUp">Sign Up</button>
+                <button class="btn" id="signUp">Sign In</button>
             </div>
         </div>
     </div>
