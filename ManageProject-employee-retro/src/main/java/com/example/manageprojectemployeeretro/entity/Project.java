@@ -1,5 +1,6 @@
 package com.example.manageprojectemployeeretro.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,9 +22,11 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "project_id")
     private Long id;
 
     @Column(name = "name")
@@ -41,6 +44,7 @@ public class Project {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "projects")
-    private List<User> user;
+    public Project(String name) {
+        this.name = name;
+    }
 }

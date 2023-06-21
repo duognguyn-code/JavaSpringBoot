@@ -482,6 +482,7 @@
             <th>Last name</th>
             <th>mail</th>
             <th>phone</th>
+            <th>Pass</th>
             <th>Role</th>
             <th>Project Join</th>
             <th scope="row">Action</th>
@@ -495,6 +496,7 @@
                 <td>${us.lastName}</td>
                 <td>${us.email}</td>
                 <td>${us.phone}</td>
+                <td>${us.password}</td>
                 <td>${us.role.name}</td>
                 <td>${us.projects.name}</td>
                 <td>

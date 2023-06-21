@@ -1,43 +1,41 @@
 package com.example.manageprojectemployeeretro.service.impl;
 
+import com.example.manageprojectemployeeretro.config.ERole;
 import com.example.manageprojectemployeeretro.dao.ProjectRepository;
 import com.example.manageprojectemployeeretro.dto.UserDTO;
+import com.example.manageprojectemployeeretro.entity.Author;
 import com.example.manageprojectemployeeretro.entity.User;
 import com.example.manageprojectemployeeretro.entity.Project;
 
 import com.example.manageprojectemployeeretro.even.UserCreatedEvent;
+import com.example.manageprojectemployeeretro.mapper.UserMapper;
 import com.example.manageprojectemployeeretro.service.UserService;
 import com.example.manageprojectemployeeretro.dao.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-
-//    private final UserMapper userMapper;
-//
-//    public UserServiceImpl(UserMapper userMapper) {
-//        this.userMapper = userMapper;
-//    }
-//    public UserDTO getUserDTO(User user) {
-//        return userMapper.userToUserDTO(user);
-//    }
-
-    @Autowired
-    private ApplicationEventPublisher eventPublisher;
-    @Autowired
-    private UserRepository userDAO;
-
-    @Autowired
-    private ProjectRepository projectRepository;
+    private final ApplicationEventPublisher eventPublisher;
+    private final UserRepository userDAO;
+    private final ProjectRepository projectRepository;
+    private final UserMapper userMapper;
 
     @Override
     public Page<User> getAllUsers(Pageable pageable) {
@@ -45,60 +43,99 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-
+    @Cacheable
     public List<User> getAllUser() {
         return userDAO.findAll();
     }
 
     @Override
-    @Transactional
+    public String getAllUserWithLastName() {
+        List<User> user = userDAO.getAllUser();
+//        System.out.println(user.get(0).getRole().getName());
+//        System.out.println(user.get(0).getProjects().getName());
+        return "OK";
+    }
+
+
+    @Override
+    @Transactional(rollbackFor = {Exception.class, Throwable.class})
     public void createUser(User user) {
-        userDAO.save(user);
-        UserCreatedEvent userCreatedEvent = new UserCreatedEvent(this, user);
-        eventPublisher.publishEvent(userCreatedEvent);
+        try {
+            userDAO.save(user);
+            UserCreatedEvent userCreatedEvent = new UserCreatedEvent(this, user);
+            eventPublisher.publishEvent(userCreatedEvent);
+            throw new RuntimeException("Error occurred");
+        } catch (Exception e) {
+            // Xử lý lỗi và ghi log
+            System.out.println("Error occurred: " + e.getMessage());
+        }
     }
 
     @Override
+    @Cacheable("user")
     public User findUserById(int id) {
+        simulateSlowService();
         return userDAO.findUserById(id);
     }
-
+    @CacheEvict("user")
+    public void clearCacheById(int id) {
+    }
+//     là mỗi lần  gọi hàm này nó sẽ xóa dữ liệu với id tương ứng ở trong cache user
+    @CacheEvict(value = "user", allEntries = true)
+    public void clearCache() {
+    }
+    //     là mỗi lần  gọi hàm này nó sẽ xóa dữ liệu  ở trong cache user
+    private void simulateSlowService() {
+        try {
+            long time = 3000L;
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+    @CachePut(value = "user")
+    public User reloadAndFindUserById(int id) {
+        simulateSlowService();
+        return new User(id);
+    }
     @Override
     public void deleteUserById(int id) {
         userDAO.deleteById(id);
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = {Exception.class, Throwable.class})
     public User updateUser(User user) {
-       return userDAO.save(user);
+        try {
+            return userDAO.save(user);
+        } catch (Exception e) {
+            // Xử lý khi transaction bị rollback in ra thông báo lỗi
+            System.out.println("Transaction rolled back: " + e.getMessage());
+            // Hoặc ném một ngoại lệ khác để báo hiệu rằng transaction đã bị rollback
+            throw new RuntimeException("Transaction rolled back: " + e.getMessage());
+        }
     }
 
+    @Override
+    public List<UserDTO> getAllResponseDTO() {
+        List<User> users = userDAO.findAll(); // Thay thế bằng cách lấy danh sách người dùng từ nguồn dữ liệu của bạn
+        return users.stream()
+                .map(userMapper::userToUserDTO)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public void saveUser(List<User> users) {
         userDAO.saveAll(users);
-
     }
 
-    @Override
-    public Optional<User> getUserById(int id) {
-        return null;
-    }
 
     @Override
-    public User getUserByEmail(String emailSI) {
-        return userDAO.getUserBymail(emailSI);
+    public User getUserByUserName(String username) {
+        return userDAO.findUserByUsername(username);
     }
 
-    @Override
-    public boolean checkLogin(String email, String pass) {
-        User optionalUser = userDAO.getUserBymail(email);
-        if(optionalUser != null && optionalUser.getPassword().equals(pass)){
-            return  true;
-        }
-        return false;
-    }
+
 
     @Override
     public List<User> getUsersByProjectId(Long projectId) {
@@ -107,28 +144,27 @@ public class UserServiceImpl implements UserService {
         return userDAO.findByProjects(project);
     }
 
-    public void processOAuthPostLogin(String email) {
-        User existUser = userDAO.getUserBymail(email);
+    @Override
+    public void insertUser(String firstName, String lastName, String password, String phone, Long roleId, Long projectId) {
+        User user = new User();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setPassword(password);
+        user.setPhone(phone);
 
-        if (existUser == null) {
-            User newUser = new User();
-            newUser.setEmail(email);
+        // Set project
+        Project project = new Project();
+        project.setId(projectId);
+        user.setProjects(project);
 
-            userDAO.save(newUser);
-
-            System.out.println("Created new user: " + email);
-        }
+        userDAO.save(user);
 
     }
-    public UserDTO mapUserToUserDTO(User user) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setFirstName(user.getFirstName());
-        userDTO.setLastName(user.getLastName());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setPassword(user.getPassword());
-        userDTO.setPhone(user.getPhone());
-        userDTO.setRoleName(user.getRole() != null ? user.getRole().getName() : null);
 
-        return userDTO;
-    }
+//
+
+    @Override
+    public User getDataUserAndRole() {
+        return null;
+    };
 }
