@@ -24,13 +24,6 @@ public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private UserRepository userRepository;
 
-    //    public ProjectDTO createProject(ProjectDTO projectDTO) {
-//        Project project = ProjectMapper.INSTANCE.projectDtoToProject(projectDTO);
-//        User user = userRepository.findUserByFirstName(projectDTO.getUserName());
-//        project.setUser((List<User>) user);
-//        Project savedProject = projectRepository.save(project);
-//        return ProjectMapper.INSTANCE.projectToProjectDTO(savedProject);
-//    }
 
     @Override
     public List<Project> getAllProJect() {
@@ -42,10 +35,6 @@ public class ProjectServiceImpl implements ProjectService {
         return projectRepository.getProjectById(id);
 
     }
-
-//    public List<ProjectProjection> findProjectByName(String name) {
-//        return projectRepository.findByName(name);
-//    }
 
     @Override
     public Project saveProject(Project project) {

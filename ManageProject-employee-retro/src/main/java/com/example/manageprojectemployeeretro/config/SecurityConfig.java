@@ -1,51 +1,74 @@
 package com.example.manageprojectemployeeretro.config;//package com.example.manageprojectemployeeretro.config;
 //
-import com.example.manageprojectemployeeretro.filter.JwtAuthenticationTokenFilter;
+import com.example.manageprojectemployeeretro.jwt.JwtAuthenticationTokenFilter;
+import com.example.manageprojectemployeeretro.service.impl.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
-
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    UserDetailsServiceImpl userService;
+
     @Bean
-    public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter() throws Exception {
-        JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter = new JwtAuthenticationTokenFilter();
-        jwtAuthenticationTokenFilter.setAuthenticationManager(authenticationManager());
-        return jwtAuthenticationTokenFilter;
+    public JwtAuthenticationTokenFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationTokenFilter();
     }
-    @Bean
-    public RestAuthenticationEntryPoint restServicesEntryPoint() {
-        return new RestAuthenticationEntryPoint();
-    }
-    @Bean
-    public CustomAccessDeniedHandler customAccessDeniedHandler() {
-        return new CustomAccessDeniedHandler();
+
+
+
+    @Bean(BeanIds.AUTHENTICATION_MANAGER)
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        // Get AuthenticationManager Bean
+        return super.authenticationManagerBean();
     }
 
     @Bean
-    @Override
-    protected AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+    }
+
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // Disable crsf cho đường dẫn /rest/**
-        http.csrf().ignoringAntMatchers("/api/**");
-        http.authorizeRequests().antMatchers("/api/login**").permitAll();
-        http.antMatcher("/api/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-                .antMatchers(HttpMethod.POST, "/api/**").access("hasRole('ROLE_ADMIN')")
-                .antMatchers(HttpMethod.DELETE, "/api/**").access("hasRole('ROLE_ADMIN')").and()
-                .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
+        http.csrf().disable();
+
+        http.authorizeRequests().antMatchers("/signup", "/signin","/apiUser/**","/cron-jobs/*").permitAll();
+
+        http.authorizeRequests().antMatchers( "/*/admin/*", "/company/*","/role/*" )
+                .hasAnyAuthority("ROLE_ADMIN");
+
+        http.authorizeRequests().antMatchers("/open-talk/*","/api1/project/**")
+                .hasAnyAuthority("ROLE_ADMIN", "ROLE_USER");
+        http.formLogin()
+                .loginPage("/apiForTemplate/users/pageLogin")
+                .loginProcessingUrl("/api/auth/main")
+                .defaultSuccessUrl("/api/auth/main", false)
+
+                .failureUrl("/security/login/error");
+
+        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/error");
+
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

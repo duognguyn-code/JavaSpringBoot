@@ -21,12 +21,12 @@ import java.time.LocalDate;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", insertable = false, updatable = false)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
 
     @Column(name = "content")
     private String content;
