@@ -1,6 +1,6 @@
 package com.example.manageprojectemployeeretro.dao;
 
-import com.example.manageprojectemployeeretro.dto.ProjectProjection;
+import com.example.manageprojectemployeeretro.projection.ProjectProjection;
 import com.example.manageprojectemployeeretro.entity.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
 

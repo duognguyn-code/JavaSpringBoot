@@ -63,6 +63,8 @@ public class AuthServiceImpl implements AuthService {
             user.setFirstName(signUpRequest.getFirstName());
             user.setLastName(signUpRequest.getLastName());
             user.setEmail(signUpRequest.getEmail());
+            user.setPhone(signUpRequest.getPhone());
+            user.setCode(signUpRequest.getCode());
             user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
             user.setProjects(projectRepository.findProjectById(signUpRequest.getProjectId()));
             user = userRepository.save(user);
@@ -100,7 +102,6 @@ public class AuthServiceImpl implements AuthService {
             authorList = authorRepository.saveAll(authorList);
             System.out.println(user.getAuthorList());
             return ResponseEntity.ok("User registered successfully1");
-
     }
 
     @Override

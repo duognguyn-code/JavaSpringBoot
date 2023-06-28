@@ -1,7 +1,9 @@
 package com.example.manageprojectemployeeretro.config;
 
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
@@ -9,12 +11,17 @@ import org.springframework.context.annotation.*;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.DefaultUriBuilderFactory;
 
 import java.util.Properties;
 
 @Configuration
 @EnableCaching
-@PropertySource("classpath:application-beta.properties")
+@PropertySources({
+        @PropertySource("classpath:application-alpha.properties"),
+        @PropertySource("classpath:application-beta.properties")
+})
+@ConfigurationProperties("bac")
 public class Config {
     @Value("${message}")
     private String message;
@@ -26,7 +33,16 @@ public class Config {
 
     @Bean
     public RestTemplate restTemplate() {
-        return new RestTemplate();
+        RestTemplate restTemplate = new RestTemplate();
+        DefaultUriBuilderFactory defaultUriBuilderFactory = new
+                DefaultUriBuilderFactory("http://hrm-api.nccsoft.vn/api/services/app/Checkin/GetUserForCheckin");
+        restTemplate.setUriTemplateHandler(defaultUriBuilderFactory);
+        return restTemplate;
+    }
+
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 
 //    @Bean

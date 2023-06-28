@@ -4,8 +4,6 @@ import com.example.manageprojectemployeeretro.config.Config;
 import com.example.manageprojectemployeeretro.config.TransactionConfig;
 import com.example.manageprojectemployeeretro.controller.rest.UserRestController;
 import com.example.manageprojectemployeeretro.dao.UserRepository;
-import com.example.manageprojectemployeeretro.dto.ProjectProjection;
-import com.example.manageprojectemployeeretro.dto.UserDTO;
 import com.example.manageprojectemployeeretro.service.ProjectService;
 import com.example.manageprojectemployeeretro.service.RoleService;
 import com.example.manageprojectemployeeretro.service.UserService;
@@ -15,18 +13,12 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -75,7 +67,7 @@ public class ControllerTest {
     @Test
     public void testTestDataUseValue() {
         // Tạo dữ liệu giả cho config.Getdata()
-        String data = "Test data";
+        String data = "this is more message1 in beta";
         when(config.Getdata()).thenReturn(data);
 
         // Gọi phương thức kiểm thử

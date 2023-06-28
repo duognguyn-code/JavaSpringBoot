@@ -24,5 +24,9 @@ public class UserDTO implements Serializable {
     private String phone;
     private String password;
     private String projectName;
+    private String code;
+    //    private List<ERole> roleNames;
+    private List<TimekeepingDTO> checkInRecords;
+    private List<TimekeepingDTO> checkOutRecords;
 
 }

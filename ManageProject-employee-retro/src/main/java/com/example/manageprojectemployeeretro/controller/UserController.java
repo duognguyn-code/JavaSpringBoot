@@ -56,7 +56,7 @@ public class UserController {
 
     @GetMapping("/pageLogin")
     public String pagelogin() {
-        return "admin/adminUser/Login";
+        return "redirect:/admin/adminUser/Login.html";
     }
 
     @GetMapping("listUser")
@@ -78,9 +78,10 @@ public class UserController {
 
 
     @GetMapping("delete/{id}")
+    @ResponseBody
     public String deleteUser(@PathVariable int id) {
         userService.deleteUserById(id);
-        return "redirect:/api1/users/listUser";
+        return "Success";
     }
 
     @RequestMapping(value = "createUser", method = RequestMethod.POST, consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE, MediaType.APPLICATION_JSON_VALUE})

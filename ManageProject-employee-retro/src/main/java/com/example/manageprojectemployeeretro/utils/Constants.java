@@ -16,6 +16,10 @@ public class Constants {
     public static String GOOGLE_LINK_GET_USER_INFO = "https://www.googleapis.com/oauth2/v1/userinfo?access_token=";
     public static String GOOGLE_GRANT_TYPE = "authorization_code";
     public static String ERROR = "Sai tên đăng nhập hoặc mật khẩu";
+    public static String EMPLOYEE_IS_NULL = "Nhân Viên không tồn tại";
+    public static String CHECK_IN_SUCCESSFULLY = "CHECK in thành công";
+
+    public static String CHECK_OUT_SUCCESSFULLY = "CHECK OUT thành công";
 
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 

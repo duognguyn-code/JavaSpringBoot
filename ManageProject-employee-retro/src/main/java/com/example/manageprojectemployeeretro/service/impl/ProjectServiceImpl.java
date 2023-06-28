@@ -1,7 +1,7 @@
 package com.example.manageprojectemployeeretro.service.impl;
 
 import com.example.manageprojectemployeeretro.dao.UserRepository;
-import com.example.manageprojectemployeeretro.dto.ProjectProjection;
+import com.example.manageprojectemployeeretro.projection.ProjectProjection;
 import com.example.manageprojectemployeeretro.entity.Project;
 
 import com.example.manageprojectemployeeretro.service.ProjectService;
@@ -52,7 +52,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public Page<Project> getAllUsers(Pageable pageable) {
+    public Page<Project> getAllProject(Pageable pageable) {
         return projectRepository.findAll(pageable);
     }
 }

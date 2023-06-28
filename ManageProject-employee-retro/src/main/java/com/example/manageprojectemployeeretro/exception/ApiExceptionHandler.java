@@ -1,6 +1,6 @@
 package com.example.manageprojectemployeeretro.exception;
 
-import com.example.manageprojectemployeeretro.entity.ErrorMessage;
+import com.example.manageprojectemployeeretro.dto.ErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;

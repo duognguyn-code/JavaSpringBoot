@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import com.example.manageprojectemployeeretro.config.Config;
 import com.example.manageprojectemployeeretro.config.TransactionConfig;
 import com.example.manageprojectemployeeretro.dao.UserRepository;
-import com.example.manageprojectemployeeretro.dto.ProjectProjection;
+import com.example.manageprojectemployeeretro.projection.ProjectProjection;
 import com.example.manageprojectemployeeretro.entity.User;
 import com.example.manageprojectemployeeretro.service.ProjectService;
 import com.example.manageprojectemployeeretro.service.RoleService;
@@ -58,6 +58,7 @@ public class UserRestController {
     private Environment env;
 
     @GetMapping("/exampleENV")
+//    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     public void getPropertyExample() {
         String propertyValue = env.getProperty("message");
         System.out.println(propertyValue);
@@ -67,7 +68,7 @@ public class UserRestController {
 
 
     @GetMapping("/users/{userId}/role")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String getUserRoleName(@PathVariable int userId) {
         User user = userRepository.findUserById(userId);
         String userID = String.valueOf(userRepository.findUserById(userId));
@@ -141,7 +142,7 @@ public class UserRestController {
     public ResponseEntity<Page<User>> getAllUsers(@RequestParam(defaultValue = "0") int page) {
         int pageSize = 10;
         Pageable pageable = PageRequest.of(page, pageSize);
-        Page<User> userPage = (Page<User>) userService.getAllUsers(pageable);
+        Page<User> userPage =  userService.getAllUsers(pageable);
 
         return ResponseEntity.ok(userPage);
     }
@@ -165,4 +166,21 @@ public class UserRestController {
         System.out.println("Success in send email");
     }
 //    @Transactionnal lienen quan hai bang
+
+    @GetMapping(value = "/insertALlemployee")
+    public ResponseEntity<?> getAndSaveListUser() throws JsonProcessingException {
+        RestTemplate restTemplate = new RestTemplate();
+        String fooResourceUrl = "http://hrm-api.nccsoft.vn/api/services/app/Checkin/GetUserForCheckin";
+        ResponseEntity<String> response = restTemplate.getForEntity(fooResourceUrl, String.class);
+        List<String> rs = Collections.singletonList(response.getBody());
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode rootNode = mapper.readTree(response.getBody());
+        JsonNode resultNode = rootNode.get("result");
+        List<User> employees = mapper.readValue(resultNode.toString(), new TypeReference<List<User>>(){});
+
+
+        userService.saveUser(employees);
+
+        return new ResponseEntity<>("Success", HttpStatus.OK);
+    }
 }

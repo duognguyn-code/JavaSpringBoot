@@ -1,4 +1,4 @@
-package com.example.manageprojectemployeeretro.entity;
+package com.example.manageprojectemployeeretro.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

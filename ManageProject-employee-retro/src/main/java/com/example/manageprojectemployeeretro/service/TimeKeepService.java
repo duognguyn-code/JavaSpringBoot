@@ -1,13 +1,17 @@
 package com.example.manageprojectemployeeretro.service;
 
-import java.util.Date;
+import com.example.manageprojectemployeeretro.dto.TimekeepingDTO;
+import com.example.manageprojectemployeeretro.projection.TimekeepingProjection;
+import com.example.manageprojectemployeeretro.entity.Timekeeping;
+
+import java.time.LocalDate;
 import java.util.List;
 
 public interface TimeKeepService {
-    String checkin(Integer code);
+    TimekeepingDTO checkin(Integer code);
 
-    String checkout(Integer code);
+    TimekeepingDTO checkout(Integer code);
 
-    List<String> findAllEMPNotCheckin(Date date);
-    List<String> findAllEMPNotCheckout(Date date);
+    List<TimekeepingProjection> getCheckInOutByUserAndDateRange(Integer userId, LocalDate startDate, LocalDate endDate);
+    List<Timekeeping> getErrorCheckInsByUserAndMonth(Integer userId, int year, int month);
 }

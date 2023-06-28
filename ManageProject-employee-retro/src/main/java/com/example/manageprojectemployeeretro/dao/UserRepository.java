@@ -41,12 +41,4 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
 
     Page<User> findAll(Pageable pageable);
 
-//    @Query("select distinct u.email from User u Left JOIN  Timekeeping t on u.id = t.idUser.id where t.createAt = ?1 and t.checkin is null")
-//    List<String> listEmpNotCheckin(Date date);
-//
-//    @Query("select distinct u.email from User u Left JOIN  Timekeeping t on u.id = t.idUser.id where t.createAt = ?1 and t.checkout is null")
-//    List<String> listEmpNotCheckOut(Date date);
-
-//    @Query(value = "SELECT NEW com.example.manageprojectemployeeretro.dto.EmployeeResponse(u.id, u.username, t.checkin, t.checkout, t.createAt) FROM User u JOIN Timekeeping t ON u.id = t.idUser.id WHERE EXTRACT(MONTH FROM t.createAt) = ?1 AND t.idUser.id = ?2 AND (t.checkin > '08:30:00' OR t.checkout IS NULL OR t.checkin IS NULL)")
-//    List<EmployeeResponse> findUserNotCheckinOrErrorByEMP(Integer month, Long idUser);
 }
